@@ -128,24 +128,6 @@ if [[ "$USER_SPACE_ARCH" == 'armv7l' ]] && [[ "$ARCH" == 'aarch64' ]]; then
     echo_error "Your device is not supported by Chromebrew yet, installing as armv7l."
 fi
 
-if [ -d "${CREW_PREFIX}" ]; then
-  if [ "$(ls -A "${CREW_PREFIX}")" ]; then
-    echo_error "${CREW_PREFIX} is not empty, would you like it to be cleared?"
-    echo_info "This will delete ALL files in ${CREW_PREFIX}!"
-    echo_info "Continue?"
-    select continue in "Yes" "No"; do
-      if [[ "${continue}" == "Yes" ]]; then
-        sudo find "${CREW_PREFIX}" -mindepth 1 -delete
-        break 2
-      else
-        exit 1
-      fi
-    done
-  fi
-else
-  sudo mkdir "${CREW_PREFIX}"
-fi
-
 # This will allow things to work without sudo.
 sudo chown "$(id -u)":"$(id -g)" "${CREW_PREFIX}"
 # This will create the directories.
